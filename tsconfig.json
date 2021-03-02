@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "noImplicitAny": true,
+    "strict": false,
+    "alwaysStrict": false,
+    "allowUnreachableCode": false,
+    "strictNullChecks": true
+  }
+}
