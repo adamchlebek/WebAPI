@@ -1,26 +1,32 @@
 import axios, {AxiosResponse} from "axios";
 
-const catURL = "https://api.thecatapi.com/v1/images/search";
-axios
-  .get(catURL, {
-    params: {
-      breed_ids: "siam",
-    },
-  })
-  .then((r: AxiosResponse) => r.data)
-  .then((breeds: any[]) => {
-    console.log(breeds);
-  });
+var fbiURL = "https://api.fbi.gov/@wanted?pageSize=20sort_on=modified&sort_order=desc";
+const headers = {
+  'Content-Type': 'application/json',
+  "Access-Control-Allow-Origin": "*"
+};
 
-  let theInput: HTMLInputElement | null;
-  let theButton: HTMLButtonElement | null;
-  theInput = document.querySelector("#userInput > input[type=text]");
-  theButton = document.querySelector("#userInput > button");
+let fieldOffice: HTMLInputElement | null;
+let statusInput: HTMLInputElement | null;
+let theButton: HTMLButtonElement | null;
+
+statusInput = document.querySelector("#userInput > select");
+fieldOffice = document.querySelector("#userInput > input[type=text]");
+theButton = document.querySelector("#userInput > button");
   
-  theButton?.addEventListener("click", () => {
-    const inputLen = theInput?.value.length ?? 0;
-    if (inputLen > 0)  
-      console.log("You entered", theInput?.value);
-    else
-      console.log("Please enter some text");
-  });
+theButton?.addEventListener("click", () => {
+  //Check if numberInput contains a number that isn't 0
+  const statusValue = statusInput?.value ?? null;
+  const fieldOfficeValue = fieldOffice?.value ?? null;
+
+  statusValue ? fbiURL += `&status=${statusValue}` : fbiURL;
+  fieldOfficeValue ? fbiURL += `&field_offices=${fieldOfficeValue}` : fbiURL;
+
+  axios.get(fbiURL, { headers })
+    .then((r: AxiosResponse) => {
+      console.log(r.data)
+    })
+    .then((people) => {
+      console.log(people)
+    })
+});
