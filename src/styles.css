@@ -32,3 +32,8 @@
 .show {
     display: unset;
 }
+
+.tableImage {
+    width: 50px;
+    height: 50px;
+}

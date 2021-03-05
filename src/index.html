@@ -31,6 +31,10 @@
                         <button id="searchPlayer" class="btn btn-secondary my-2" style="margin: 0 !important">Search Player</button>
                      </div>
                   </div>
+
+                  <div class="row line-item">
+                    <button id="clear" class="btn btn-secondary my-2" style="margin: 0 !important">Clear Tables</button>
+                 </div>
                </section>
                <p id="error" class="error"></p>
                <p id="success" class="success"></p>
@@ -42,7 +46,7 @@
          <div class="album py-5 bg-light">
           <div class="container">
             <h3>Teams</h3>
-            <table class="table">
+            <table class="table" id="teamsTable">
               <thead>
                 <tr>
                   <th scope="col">Id</th>
@@ -53,20 +57,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
-                </tr>
               </tbody>
             </table>
           </div>
           <hr>
             <div class="container">
               <h3>Players</h3>
-              <table class="table">
+              <table class="table" id="playersTable">
                 <thead>
                   <tr>
                     <th scope="col">Id</th>
@@ -77,13 +74,6 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
                 </tbody>
               </table>
             </div>

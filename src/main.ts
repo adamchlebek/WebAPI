@@ -9,6 +9,11 @@ let searchPlayerInput: HTMLButtonElement | null;
 let successLabel: HTMLParagraphElement | null;
 let errorLabel: HTMLParagraphElement | null;
 
+let playerTable: HTMLTableElement | null;
+let teamsTable: HTMLTableElement | null;
+
+let clearButton: HTMLButtonElement | null;
+
 teamsInput = document.querySelector("#teams");
 searchInput = document.querySelector("#player");
 
@@ -18,11 +23,10 @@ searchPlayerInput = document.querySelector("#searchPlayer");
 successLabel = document.querySelector("#success");
 errorLabel = document.querySelector("#error");
 
-teamsInput?.addEventListener('change', () => {
-  var team = teamsInput?.value;
+playerTable = document.querySelector("#playersTable");
+teamsTable = document.querySelector("#teamsTable");
 
-  console.log(team);
-})
+clearButton = document.querySelector("#clear");
 
 axios.get('https://www.balldontlie.io/api/v1/teams').then((r: AxiosResponse) => {
   const teams = r.data.data;
@@ -49,9 +53,21 @@ searchPlayerInput?.addEventListener("click", () => {
     }
 
     var player = r.data.data[0];
+    console.log(player)
     setMessage(successLabel, 'Player added to table!');
 
     //Add player info to table here
+    var tableBody = playerTable?.getElementsByTagName("tbody")[0];
+    var row = tableBody?.insertRow();
+    var playerImage = document.createElement('img');
+    playerImage.src = `https://nba-players.herokuapp.com/players/${player.last_name}/${player.first_name}`;
+    playerImage.classList.add("tableImage");
+
+    row?.insertCell().appendChild(document.createTextNode(player.id));
+    row?.insertCell().appendChild(playerImage);
+    row?.insertCell().appendChild(document.createTextNode(`${player.first_name} ${player.last_name}`));
+    row?.insertCell().appendChild(document.createTextNode(player.position));
+    row?.insertCell().appendChild(document.createTextNode(player.height_feet ? `${player.height_feet}' ${player.height_inches}"` : 'N/A'));
   }).catch((error: AxiosResponse) => {
     setMessage(errorLabel, error.statusText);
   });
@@ -61,13 +77,35 @@ addTeamInput?.addEventListener("click", () => {
   var selectedTeam = teamsInput?.value;
 
   axios.get(`https://www.balldontlie.io/api/v1/teams/${selectedTeam}`).then((r: AxiosResponse) => {
+    var team: any = r.data;
+
     setMessage(successLabel, 'Team added to table!');
 
     //Add Info to Table
+    var tableBody = teamsTable?.getElementsByTagName("tbody")[0];
+    var row = tableBody?.insertRow();
+    var teamIcon = document.createElement('img');
+    teamIcon.src = `https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/${team.abbreviation.toLowerCase()}.png`;
+    teamIcon.classList.add("tableImage");
+
+    row?.insertCell().appendChild(document.createTextNode(team.id));
+    row?.insertCell().appendChild(teamIcon);
+    row?.insertCell().appendChild(document.createTextNode(team.name));
+    row?.insertCell().appendChild(document.createTextNode(team.abbreviation));
+    row?.insertCell().appendChild(document.createTextNode(team.conference));
+
   }).catch((error: AxiosResponse) => {
     setMessage(errorLabel, error.statusText);
   })
 })
+
+clearButton?.addEventListener("click", () => {
+  removeChildNodes(teamsTable?.getElementsByTagName("tbody")[0]);
+  removeChildNodes(playerTable?.getElementsByTagName("tbody")[0]);
+
+  setMessage(successLabel, 'Tables successfully cleared!');
+})
+
 
 function setMessage(element: any, text: string) {
   showLabel(element);
@@ -88,11 +126,15 @@ function hideLabel(element: any) {
 }
 
 function setText(element: any, text: string) {
+  removeChildNodes(element);
+
+  element?.appendChild(document.createTextNode(text));
+}
+
+function removeChildNodes(element: any) {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
   }
-
-  element?.appendChild(document.createTextNode(text));
 }
 
 //http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/#{abbreviation}.png
