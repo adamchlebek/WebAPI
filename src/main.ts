@@ -66,7 +66,7 @@ searchPlayerInput?.addEventListener("click", () => {
     row?.insertCell().appendChild(document.createTextNode(player.id));
     row?.insertCell().appendChild(playerImage);
     row?.insertCell().appendChild(document.createTextNode(`${player.first_name} ${player.last_name}`));
-    row?.insertCell().appendChild(document.createTextNode(player.position));
+    row?.insertCell().appendChild(document.createTextNode(player.position ? player.position : 'N/A'));
     row?.insertCell().appendChild(document.createTextNode(player.height_feet ? `${player.height_feet}' ${player.height_inches}"` : 'N/A'));
   }).catch((error: AxiosResponse) => {
     setMessage(errorLabel, error.statusText);
@@ -136,5 +136,3 @@ function removeChildNodes(element: any) {
     element.removeChild(element.firstChild);
   }
 }
-
-//http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/#{abbreviation}.png
