@@ -1,8 +1,8 @@
 
 ## Overview
 
-This project is to familiarize yourself with TypeScript and HTML.
+This project is to familiarize yourself with WebAPIs and HTML/TS.
 
 ## Production URL
 
-To view the production URL, visit [https://tshtml.vercel.app/](https://tshtml.vercel.app/)!
+To view the production URL, visit [https://ball-dont-lie.vercel.app/](https://ball-dont-lie.vercel.app/)!
